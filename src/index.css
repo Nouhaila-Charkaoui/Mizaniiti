@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== DARK MODE GLOBAL ===== */
+html.dark body {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark {
+  background-color: #0f172a;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+html.dark ::-webkit-scrollbar-track { background: #1e293b; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+html.dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+/* ===== CARD ===== */
+.card {
+  @apply bg-white rounded-2xl shadow-sm border border-slate-100 p-8;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+html.dark .card {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+/* ===== BOUTONS ===== */
+.btn-primary {
+  @apply bg-primary-600 text-white px-5 py-2.5 rounded-xl font-medium hover:bg-primary-700 transition-colors duration-200 disabled:opacity-50 text-base;
+}
+
+.btn-secondary {
+  @apply bg-slate-100 text-slate-700 px-5 py-2.5 rounded-xl font-medium hover:bg-slate-200 transition-colors duration-200 text-base;
+}
+
+html.dark .btn-secondary {
+  background-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+.btn-danger {
+  @apply bg-red-50 text-red-600 px-5 py-2.5 rounded-xl font-medium hover:bg-red-100 transition-colors duration-200 text-base;
+}
+
+/* ===== INPUT ===== */
+.input {
+  @apply w-full border border-slate-200 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition;
+}
+
+html.dark .input {
+  background-color: #0f172a !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .input::placeholder { color: #64748b !important; }
+
+/* ===== LABEL ===== */
+.label {
+  @apply block text-sm font-semibold text-slate-700 mb-2;
+}
+
+html.dark .label { color: #94a3b8 !important; }
+
+/* ===== BACKGROUNDS ===== */
+html.dark .bg-white       { background-color: #1e293b !important; }
+html.dark .bg-slate-50    { background-color: #0f172a !important; }
+html.dark .bg-slate-100   { background-color: #1e293b !important; }
+html.dark .bg-slate-200   { background-color: #334155 !important; }
+
+/* ===== TEXTES ===== */
+html.dark .text-slate-900 { color: #f1f5f9 !important; }
+html.dark .text-slate-800 { color: #e2e8f0 !important; }
+html.dark .text-slate-700 { color: #cbd5e1 !important; }
+html.dark .text-slate-600 { color: #94a3b8 !important; }
+html.dark .text-slate-500 { color: #64748b !important; }
+html.dark .text-slate-400 { color: #475569 !important; }
+
+/* ===== BORDURES ===== */
+html.dark .border-slate-100 { border-color: #334155 !important; }
+html.dark .border-slate-200 { border-color: #475569 !important; }
+html.dark .border-b         { border-color: #334155 !important; }
+
+/* ===== NAVBAR ===== */
+html.dark header {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark header .text-slate-600 { color: #94a3b8 !important; }
+html.dark header .text-slate-900 { color: #f1f5f9 !important; }
+html.dark header .hover\:bg-slate-50:hover { background-color: #334155 !important; }
+html.dark header .bg-primary-100 { background-color: rgba(234,108,10,0.2) !important; }
+
+/* ===== FOOTER ===== */
+html.dark footer { background-color: #020617 !important; }
+
+/* ===== HOVER ===== */
+html.dark .hover\:bg-slate-50:hover  { background-color: #1e293b !important; }
+html.dark .hover\:bg-slate-100:hover { background-color: #334155 !important; }
+html.dark .hover\:bg-slate-200:hover { background-color: #475569 !important; }
+
+/* ===== SELECT / OPTION ===== */
+html.dark select {
+  background-color: #0f172a !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+
+/* ===== BADGES COULEURS ===== */
+html.dark .bg-green-100  { background-color: rgba(34,197,94,0.15) !important; }
+html.dark .text-green-600 { color: #86efac !important; }
+html.dark .text-green-700 { color: #86efac !important; }
+html.dark .bg-red-100    { background-color: rgba(239,68,68,0.15) !important; }
+html.dark .text-red-500  { color: #fca5a5 !important; }
+html.dark .text-red-600  { color: #fca5a5 !important; }
+html.dark .bg-orange-50  { background-color: rgba(249,115,22,0.1) !important; }
+html.dark .bg-red-50     { background-color: rgba(239,68,68,0.1) !important; }
+html.dark .bg-primary-50 { background-color: rgba(234,108,10,0.1) !important; }
+
+/* ===== SHADOW ===== */
+html.dark .shadow-sm {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+}
+
+/* ===== MODAL / OVERLAY ===== */
+html.dark .bg-black\/50 { background-color: rgba(0,0,0,0.7) !important; }
