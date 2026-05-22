@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import api from '../api/api';
+import api from '../api/api.js';
 import toast from 'react-hot-toast';
-import { Plus, Trash2, Filter, X } from 'lucide-react';
+import { Plus, Trash2, Filter, X, Pencil } from 'lucide-react';
 
 function Modal({ title, onClose, children }) {
   return (
@@ -19,18 +19,20 @@ function Modal({ title, onClose, children }) {
   );
 }
 
+const emptyForm = {
+  compte_id: '', categorie_id: '', montant: '',
+  type: 'depense', description: '', date_transaction: new Date().toISOString().split('T')[0],
+};
+
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [comptes, setComptes]           = useState([]);
   const [categories, setCategories]     = useState([]);
   const [loading, setLoading]           = useState(true);
   const [showModal, setShowModal]       = useState(false);
+  const [editId, setEditId]             = useState(null); // ← null = ajout, sinon id = modification
   const [filters, setFilters]           = useState({ type: '', compte_id: '' });
-
-  const [form, setForm] = useState({
-    compte_id: '', categorie_id: '', montant: '',
-    type: 'depense', description: '', date_transaction: new Date().toISOString().split('T')[0],
-  });
+  const [form, setForm]                 = useState(emptyForm);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -55,23 +57,58 @@ export default function Transactions() {
     }
   };
 
+  // eslint-disable-next-line
   useEffect(() => { fetchAll(); }, [filters]);
 
+  // ── Ouvrir modal ajout ──────────────────────────────────────────
+  const openAdd = () => {
+    setEditId(null);
+    setForm(emptyForm);
+    setShowModal(true);
+  };
+
+  // ── Ouvrir modal modification ───────────────────────────────────
+  const openEdit = (t) => {
+    setEditId(t.id);
+    setForm({
+      compte_id:        t.compte_id,
+      categorie_id:     t.categorie_id,
+      montant:          t.montant,
+      type:             t.type,
+      description:      t.description || '',
+      date_transaction: t.date_transaction,
+    });
+    setShowModal(true);
+  };
+
+  // ── Fermer modal ────────────────────────────────────────────────
+  const closeModal = () => {
+    setShowModal(false);
+    setEditId(null);
+    setForm(emptyForm);
+  };
+
+  // ── Soumettre (ajout ou modification) ──────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/transactions', form);
-      toast.success('Transaction ajoutée !');
-      setShowModal(false);
-      setForm({ compte_id: '', categorie_id: '', montant: '', type: 'depense', description: '', date_transaction: new Date().toISOString().split('T')[0] });
+      if (editId) {
+        await api.put(`/transactions/${editId}`, form);
+        toast.success('Transaction modifiée !');
+      } else {
+        await api.post('/transactions', form);
+        toast.success('Transaction ajoutée !');
+      }
+      closeModal();
       fetchAll();
     } catch (err) {
       const errors = err.response?.data?.errors;
       if (errors) Object.values(errors).flat().forEach(m => toast.error(m));
-      else toast.error('Erreur lors de l\'ajout.');
+      else toast.error('Erreur lors de l\'enregistrement.');
     }
   };
 
+  // ── Supprimer ───────────────────────────────────────────────────
   const handleDelete = async (id) => {
     if (!window.confirm('Supprimer cette transaction ?')) return;
     try {
@@ -92,7 +129,7 @@ export default function Transactions() {
           <h1 className="text-2xl font-bold text-slate-900">Transactions</h1>
           <p className="text-slate-500">Historique de vos mouvements financiers</p>
         </div>
-        <button onClick={() => setShowModal(true)} className="btn-primary flex items-center gap-2">
+        <button onClick={openAdd} className="btn-primary flex items-center gap-2">
           <Plus className="w-4 h-4" /> Ajouter
         </button>
       </div>
@@ -160,13 +197,22 @@ export default function Transactions() {
                         {t.type === 'revenu' ? '+' : '-'}{t.montant?.toLocaleString('fr-MA')} MAD
                       </span>
                     </td>
+                    {/* ── Boutons modifier + supprimer ── */}
                     <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleDelete(t.id)}
-                        className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center text-red-400 hover:bg-red-100 transition-colors"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => openEdit(t)}
+                          className="w-7 h-7 rounded-lg bg-primary-50 flex items-center justify-center text-primary-500 hover:bg-primary-100 transition-colors"
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(t.id)}
+                          className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center text-red-400 hover:bg-red-100 transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -176,9 +222,12 @@ export default function Transactions() {
         </div>
       </div>
 
-      {/* Modal ajout */}
+      {/* Modal ajout / modification */}
       {showModal && (
-        <Modal title="Nouvelle transaction" onClose={() => setShowModal(false)}>
+        <Modal
+          title={editId ? 'Modifier la transaction' : 'Nouvelle transaction'}
+          onClose={closeModal}
+        >
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="label">Type</label>
@@ -232,8 +281,10 @@ export default function Transactions() {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1">Annuler</button>
-              <button type="submit" className="btn-primary flex-1">Enregistrer</button>
+              <button type="button" onClick={closeModal} className="btn-secondary flex-1">Annuler</button>
+              <button type="submit" className="btn-primary flex-1">
+                {editId ? 'Modifier' : 'Enregistrer'}
+              </button>
             </div>
           </form>
         </Modal>

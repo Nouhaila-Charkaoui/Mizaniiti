@@ -104,20 +104,44 @@ class TransactionController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $transaction = Transaction::where('user_id', $request->user()->id)
-            ->findOrFail($id);
+{
+    $transaction = Transaction::where('user_id', $request->user()->id)
+        ->findOrFail($id);
 
-        $validated = $request->validate([
-            'description'      => 'nullable|string|max:500',
-            'date_transaction' => 'sometimes|date',
-        ]);
+    $validated = $request->validate([
+        'compte_id'        => 'required|exists:comptes,id',
+        'categorie_id'     => 'required|exists:categories,id',
+        'montant'          => 'required|numeric|min:0.01',
+        'type'             => 'required|in:depense,revenu',
+        'description'      => 'nullable|string|max:500',
+        'date_transaction' => 'required|date',
+    ]);
 
-        $transaction->update($validated);
-        $transaction->load(['categorie', 'compte']);
-
-        return response()->json($transaction);
+    // Inverser l'ancien effet sur le solde du compte
+    $ancienCompte = $transaction->compte;
+    if ($transaction->type === 'revenu') {
+        $ancienCompte->solde_actuel -= $transaction->montant;
+    } else {
+        $ancienCompte->solde_actuel += $transaction->montant;
     }
+    $ancienCompte->save();
+
+    // Appliquer le nouveau effet sur le nouveau compte
+    $nouveauCompte = Compte::where('user_id', $request->user()->id)
+        ->findOrFail($validated['compte_id']);
+    if ($validated['type'] === 'revenu') {
+        $nouveauCompte->solde_actuel += $validated['montant'];
+    } else {
+        $nouveauCompte->solde_actuel -= $validated['montant'];
+    }
+    $nouveauCompte->save();
+
+    // Mettre à jour la transaction
+    $transaction->update($validated);
+    $transaction->load(['categorie', 'compte']);
+
+    return response()->json($transaction);
+}
 
     public function destroy(Request $request, $id)
     {
