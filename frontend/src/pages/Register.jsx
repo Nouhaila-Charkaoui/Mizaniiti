@@ -4,7 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
-import brandImage from "../assets/logoauth.png";
+import brandImage from "../assets/flosimg.jpeg";
 
 export default function Register() {
   const { register } = useAuth();

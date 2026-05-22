@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import { TrendingUp } from 'lucide-react';
 
-import logo from '../assets/logoGpt.png';
+import logo from '../assets/logonouhaila.jpeg';
 
 function Footer() {
   return (
@@ -25,7 +25,7 @@ function Footer() {
         <div className="text-right text-xs space-y-1">
           <p>support@mizaniiti.com</p>
           <p>Casablanca, Maroc</p>
-          <p>© {new Date().getFullYear()} Mizaniiti. Tous droits réservés.</p>
+          <p>NOUH&ILY© {new Date().getFullYear()} Mizaniiti. Tous droits réservés.</p>
         </div>
 
       </div>

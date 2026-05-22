@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-import logo from '../assets/logoGpt.png';
+import logo from '../assets/logonouhaila.jpeg';
 
 const navItems = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Tableau de bord' },
