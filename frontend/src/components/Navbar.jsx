@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+import logo from '../assets/mizaniiti_logo_svg.svg';
+
 const navItems = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Tableau de bord' },
   { to: '/transactions', icon: ArrowLeftRight,  label: 'Transactions' },
@@ -31,12 +33,10 @@ export default function Navbar() {
 
         {/* Logo — gauche */}
         <div className="flex items-center gap-3 flex-shrink-0">
-  <div className="w-8 h-8 rounded-xl bg-primary-600 flex items-center justify-center">
-    <TrendingUp className="w-4 h-4 text-white" />
-  </div>
+  <img src={logo} alt="Mizaniiti" className="w-26 h-26 rounded-xl" />
   <div>
-    <span className="font-bold text-slate-900 text-lg leading-none block">Mizaniiti</span>
-    <span className="text-xs text-slate-400 leading-none">ميزانيتي</span>
+    <span className="font-bold text-primary-600 text-xl leading-none block" style={{ fontFamily: 'Georgia, serif' }}>Mizaniiti</span>
+    
   </div>
 </div>
 
