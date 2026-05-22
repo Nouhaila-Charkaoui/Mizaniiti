@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
 //import brandImage from "../assets/login-brand.png";
-import brandImage from "../assets/mizaniitiiiii.png" ;
+import brandImage from "../assets/logoauth.png" ;
 
 export default function Login() {
   const { login } = useAuth();
