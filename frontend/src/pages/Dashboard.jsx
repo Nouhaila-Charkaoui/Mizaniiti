@@ -101,7 +101,7 @@ export default function Dashboard() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Tableau de bord</h1>
-        <p className="text-slate-500">Bonjour, {user?.name} 👋 — voici votre résumé financier</p>
+        <p className="text-slate-500">Bonjour {user?.name} 👋, voici votre résumé financier</p>
       </div>
 
       {/* Stats Cards */}

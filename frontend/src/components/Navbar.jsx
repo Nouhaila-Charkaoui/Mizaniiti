@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-import logo from '../assets/mizaniiti_logo_svg.svg';
+import logo from '../assets/logoGpt.png';
 
 const navItems = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Tableau de bord' },
@@ -29,13 +29,13 @@ export default function Navbar() {
 
   return (
     <header className="bg-white border-b border-slate-100 sticky top-0 z-10 shadow-sm w-full">
-      <div className="w-full px-8 flex items-center justify-between h-16">
+      <div className="w-full px-8 flex items-center justify-between h-18">
 
         {/* Logo — gauche */}
         <div className="flex items-center gap-3 flex-shrink-0">
-  <img src={logo} alt="Mizaniiti" className="w-26 h-26 rounded-xl" />
+  <img src={logo} alt="Mizaniiti" className="w-auto h-12 rounded-xl" />
   <div>
-    <span className="font-bold text-primary-600 text-xl leading-none block" style={{ fontFamily: 'Georgia, serif' }}>Mizaniiti</span>
+    <span className="font-bold text-primary-600 text-4xl leading-none block" style={{ fontFamily: 'Georgia, serif' }}>Mizaniiti</span>
     
   </div>
 </div>

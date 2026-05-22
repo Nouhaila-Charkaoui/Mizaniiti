@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import { TrendingUp } from 'lucide-react';
 
-import logo from '../assets/mizaniiti_logo_svg.svg';
+import logo from '../assets/logoGpt.png';
 
 function Footer() {
   return (
@@ -11,7 +11,7 @@ function Footer() {
         
         {/* Logo + nom */}
         <div className="flex items-center gap-2">
-          <img src={logo} alt="Mizaniiti" className="w-30 h-30 rounded-lg" />
+          <img src={logo} alt="Mizaniiti" className="w-auto h-12 rounded-lg" />
           <span style={{ fontFamily: 'Georgia, serif' }} className="text-white font-bold text-lg">Mizaniiti</span>
         </div>
 
