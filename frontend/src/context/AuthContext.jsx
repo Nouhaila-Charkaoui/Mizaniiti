@@ -8,14 +8,22 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('mizaniiti_user');
-    const token      = localStorage.getItem('mizaniiti_token');
+  const token = localStorage.getItem('mizaniiti_token');
 
-    if (storedUser && token) {
-      setUser(JSON.parse(storedUser));
-    }
+  if (!token) {
     setLoading(false);
-  }, []);
+    return;
+  }
+
+  
+  api.get('/me')
+    .then(res => setUser(res.data))
+    .catch(() => {
+      localStorage.removeItem('mizaniiti_token');
+      localStorage.removeItem('mizaniiti_user');
+    })
+    .finally(() => setLoading(false));
+}, []);
 
   const login = async (email, password) => {
     const response = await api.post('/login', { email, password });

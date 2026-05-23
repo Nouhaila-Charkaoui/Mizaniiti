@@ -84,7 +84,9 @@ export default function Login() {
                 >
                   {showPwd ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
+                
               </div>
+              <p className="text-xs text-slate-400 mt-1">Au moins 8 caractères</p>
             </div>
 
             <button
