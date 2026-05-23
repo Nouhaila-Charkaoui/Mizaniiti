@@ -24,11 +24,18 @@ export default function Login() {
       const user = await login(email, password);
       toast.success(`Bienvenue ${user.name}`);
       navigate("/dashboard");
-    } catch {
-      toast.error("Email ou mot de passe incorrect");
-    } finally {
-      setLoading(false);
-    }
+    }  catch (err) {
+  const status = err.response?.status;
+  if (status === 404) {
+    toast.error("Aucun compte trouvé avec cet email.");
+  } else if (status === 401) {
+    toast.error("Email ou Mot de passe incorrect.");
+  } else {
+    toast.error("Une erreur est survenue.");
+  }
+} finally {
+    setLoading(false);  // ← OBLIGATOIRE ici
+}
   };
 
   return (

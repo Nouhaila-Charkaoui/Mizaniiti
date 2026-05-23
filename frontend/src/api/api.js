@@ -19,7 +19,7 @@ api.interceptors.request.use((config) => {
 });
 
 // Gérer les erreurs 401 globalement
-api.interceptors.response.use(
+{/*api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
@@ -27,6 +27,23 @@ api.interceptors.response.use(
       localStorage.removeItem('mizaniiti_user');
       window.location.href = '/login';
     }
+    return Promise.reject(error);
+  }
+);*/}
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Ne pas rediriger si on est déjà sur /login ou /register
+    const isAuthRoute = window.location.pathname === '/login' || 
+                        window.location.pathname === '/register';
+    
+    if (error.response?.status === 401 && !isAuthRoute) {
+      localStorage.removeItem('mizaniiti_token');
+      localStorage.removeItem('mizaniiti_user');
+      window.location.href = '/login';
+    }
+    
     return Promise.reject(error);
   }
 );
