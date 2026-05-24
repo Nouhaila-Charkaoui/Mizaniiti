@@ -157,48 +157,6 @@ Application disponible sur `http://localhost:5173`
 
 ---
 
-## API — Routes principales
-
-### Publiques
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/register | Créer un compte |
-| POST | /api/login | Connexion |
-
-### Authentifiées
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/me | Utilisateur connecté |
-| POST | /api/logout | Déconnexion |
-| PUT | /api/profile | Modifier le profil |
-| GET | /api/transactions | Liste des transactions |
-| POST | /api/transactions | Créer une transaction |
-| PUT | /api/transactions/{id} | Modifier une transaction |
-| DELETE | /api/transactions/{id} | Supprimer une transaction |
-| GET | /api/budgets | Liste des budgets |
-| POST | /api/budgets | Créer un budget |
-| PUT | /api/budgets/{id} | Modifier un budget |
-| DELETE | /api/budgets/{id} | Supprimer un budget |
-| GET | /api/comptes | Liste des comptes |
-| POST | /api/comptes | Créer un compte |
-| PUT | /api/comptes/{id} | Modifier un compte |
-| DELETE | /api/comptes/{id} | Supprimer un compte |
-| GET | /api/stats | Statistiques dashboard |
-
-### Admin uniquement
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/admin/stats | Stats globales |
-| GET | /api/admin/users | Liste des utilisateurs |
-| PATCH | /api/admin/users/{id}/toggle | Activer / désactiver |
-| PATCH | /api/admin/users/{id}/role | Changer le rôle |
-| DELETE | /api/admin/users/{id} | Supprimer un utilisateur |
-| GET | /api/admin/transactions | Toutes les transactions |
-
----
 
 ## Base de données
 
