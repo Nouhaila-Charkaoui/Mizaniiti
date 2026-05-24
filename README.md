@@ -16,7 +16,7 @@ En tant que futures ingénieures, nous avons voulu concevoir une solution **User
 
 ---
 
-## 🛠️ Stack Technique & Choix Architecturaux
+##  Stack Technique & Choix Architecturaux
 
 Nous avons opté pour une **Architecture Découplée ** stricte pour garantir la scalabilité et la maintenabilité du système.
 
@@ -85,9 +85,9 @@ API disponible sur http://localhost:8000
 
 ### Frontend
 --bash
-cd frontend
-npm install
-npm run dev
+   cd frontend
+   npm install
+   npm run dev
 L'application est disponible sur http://localhost:5173
 
 ###Comptes de Test (Jury)
