@@ -17,8 +17,8 @@ L'idée est venue d'un constat assez simple : gérer ses finances au quotidien c
 
 | Couche | Technologies |
 |--------|-------------|
-| Frontend | React 18, Vite, Tailwind CSS, Axios, Recharts |
-| Backend | Laravel 12, PHP 8.2 |
+| Frontend | React , Vite, Tailwind CSS, Axios, Recharts |
+| Backend | Laravel , PHP  |
 | Auth | Laravel Sanctum (token Bearer) |
 | Base de données | MySQL |
 
@@ -48,12 +48,68 @@ L'idée est venue d'un constat assez simple : gérer ses finances au quotidien c
 Le frontend et le backend sont complètement séparés et communiquent uniquement via des requêtes HTTP. Côté Laravel, on a un controller par ressource avec validation des données et un middleware `CheckRole` pour protéger les routes admin. Côté React, l'authentification est centralisée dans un `AuthContext`, les routes sont protégées par un composant `ProtectedRoute`, et tous les appels API passent par un client Axios centralisé.
 
 ---
+## Structure du projet
+
+```
+Mizaniiti/
+├── backend/                          # Laravel API
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/
+│   │   │   │   └── Api/
+│   │   │   │       ├── AuthController.php
+│   │   │   │       ├── TransactionController.php
+│   │   │   │       ├── BudgetController.php
+│   │   │   │       ├── CompteController.php
+│   │   │   │       ├── CategorieController.php
+│   │   │   │       └── AdminController.php
+│   │   │   └── Middleware/
+│   │   │       └── CheckRole.php
+│   │   └── Models/
+│   │       ├── User.php
+│   │       ├── Transaction.php
+│   │       ├── Budget.php
+│   │       ├── Compte.php
+│   │       └── Categorie.php
+│   ├── database/
+│   │   ├── migrations/
+│   │   └── seeders/
+│   └── routes/
+│       └── api.php
+│
+├── frontend/
+│   └── src/
+│       ├── api/
+│       │   └── api.js
+│       ├── context/
+│       │   ├── AuthContext.jsx
+│       │   └── SettingsContext.jsx
+│       ├── components/
+│       │   ├── Layout.jsx
+│       │   ├── Sidebar.jsx
+│       │   ├── Navbar.jsx
+│       │   ├── ProtectedRoute.jsx
+│       │   ├── Profile.jsx
+│       │   └── Parametres.jsx
+│       ├── pages/
+│       │   ├── Login.jsx
+│       │   ├── Register.jsx
+│       │   ├── Dashboard.jsx
+│       │   ├── Transactions.jsx
+│       │   ├── Budgets.jsx
+│       │   ├── Comptes.jsx
+│       │   └── AdminPanel.jsx
+│       ├── App.jsx
+│       └── main.jsx
+│
+├└── README.md
+```
 
 ## Installation
 
 ### Prérequis
-- PHP 8.2+, Composer
-- Node.js 18+, npm
+- PHP +, Composer
+- Node.js +, npm
 - MySQL / XAMPP
 
 ### Backend
@@ -147,5 +203,11 @@ Application disponible sur `http://localhost:5173`
 ## Base de données
 
 5 tables : `users`, `comptes`, `categories`, `transactions`, `budgets`
+## Améliorations futures
 
-Le fichier `mizaniiti.sql` contient la structure complète et des données de test.
+- Export des transactions en CSV ou PDF
+- Transactions récurrentes (loyer, salaire...)
+- Notifications par email pour les alertes budgets
+- Support multi-devises (EUR, USD...)
+- Amélioration du responsive mobile
+
